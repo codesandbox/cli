@@ -2,7 +2,9 @@
   "name": "codesandbox-cli",
   "version": "1.0.0",
   "description": "The CLI used for communcating with CodeSandbox",
-  "main": "src/index.js",
+  "bin": {
+    "codesandbox": "dist/index.js"
+  },
   "author": "Ives van Hoorne",
   "license": "MIT",
   "scripts": {

@@ -1,10 +1,10 @@
 import axios from 'axios';
 import * as values from 'lodash.values';
 
-import { getUser } from '../../cfg';
-import { CREATE_SANDBOX_URL } from '../url';
+import { getUser } from '../cfg';
+import { CREATE_SANDBOX_URL } from './url';
 
-export default async function upload(
+export async function uploadSandbox(
   modules: ISandboxModule[],
   directories: ISandboxDirectory[],
   externalResources: string[],

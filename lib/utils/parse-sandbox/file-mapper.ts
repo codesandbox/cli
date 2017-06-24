@@ -47,7 +47,10 @@ function readFileToSandboxModule(
   const name = path.basename(modulePath);
 
   if (FILE_LOADER_REGEX.test(name)) {
-    throw new FileError(`Binary files are not supported yet.`, modulePath);
+    throw new FileError(
+      `Static file hosting is not supported yet.`,
+      modulePath,
+    );
   }
 
   const code = fs.readFileSync(modulePath, 'utf8');
