@@ -8,8 +8,9 @@
   "author": "Ives van Hoorne",
   "license": "MIT",
   "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watch"
+    "test": "yarn build && jest",
+    "test:watch": "jest --watch",
+    "build": "rimraf dist && tsc -p tsconfig.json"
   },
   "dependencies": {
     "axios": "^0.16.2",
@@ -44,6 +45,7 @@
     "@types/sockjs-node": "^0.3.28",
     "@types/update-notifier": "^1.0.1",
     "jest": "^20.0.4",
+    "rimraf": "^2.6.1",
     "ts-jest": "^20.0.6",
     "tslint": "^5.4.3",
     "tslint-config-prettier": "^1.1.0",

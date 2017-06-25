@@ -50,7 +50,7 @@ function getJsResource(line: string): string | undefined {
  *
  * @param {string} html
  */
-function getExternalResources(html: string): string[] {
+function getExternalResources(html: string) {
   return html
     .split('\n')
     .map(line => getCssResource(line) || getJsResource(line))
@@ -79,7 +79,7 @@ function getBodyContent(html: string): string | undefined {
  * @param {string} html
  */
 export default function parseHTML(html: string) {
-  const externalResources = getExternalResources(html);
+  const externalResources = getExternalResources(html) as string[];
   const bodyContent = getBodyContent(html);
 
   return {

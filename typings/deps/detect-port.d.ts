@@ -6,6 +6,6 @@ declare module 'detect-port' {
       _port: number,
     ) => void): void;
   }
-  declare const detectPort: DetectPort;
+  const detectPort: DetectPort;
   export = detectPort;
 }

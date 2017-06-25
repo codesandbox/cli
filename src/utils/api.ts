@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import * as values from 'lodash.values';
+import { values } from 'lodash';
 
 import { getToken } from '../cfg';
 import { CREATE_SANDBOX_URL, GET_USER_URL } from './url';

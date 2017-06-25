@@ -12,7 +12,7 @@ declare module 'sockjs' {
     disconnect_delay?: number;
   }
 
-  export declare function createServer(options?: ServerOptions): Server;
+  export function createServer(options?: ServerOptions): Server;
 
   export interface Server extends NodeJS.EventEmitter {
     installHandlers(server: http.Server, options?: ServerOptions): any;

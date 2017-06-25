@@ -1,3 +1,7 @@
 declare module '*.json' {
-  export = any;
+  const package: {
+    name: string;
+    version: string;
+  };
+  export = package;
 }
