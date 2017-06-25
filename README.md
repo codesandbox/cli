@@ -33,3 +33,7 @@ codesandbox ./
 - You can only deploy `create-react-app` templates
 - Static file hosting is not supported
   - This means that `public` and binary files cannot be uploaded
+
+## Inspiration
+
+I took a lot of inspiration from [now-cli](https://github.com/zeit/now-cli) and [preact-cli](https://github.com/developit/preact-cli) while building this.
