@@ -2,6 +2,7 @@
 
 import * as chalk from 'chalk';
 import * as program from 'commander';
+import * as updateNotifier from 'update-notifier';
 
 import { read } from './cfg';
 
@@ -32,3 +33,5 @@ program.parse(process.argv);
 if (!process.argv.slice(2).length) {
   program.outputHelp();
 }
+
+updateNotifier({ pkg: packageInfo }).notify();
