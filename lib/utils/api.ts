@@ -19,6 +19,7 @@ export async function uploadSandbox(
   const sandbox = {
     directories,
     external_resources: externalResources,
+    from_cli: true,
     modules,
     npm_dependencies: dependencies,
   };
