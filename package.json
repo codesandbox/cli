@@ -1,6 +1,6 @@
 {
   "name": "codesandbox",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "The CLI used for communcating with CodeSandbox",
   "main": "lib/index.js",
   "bin": {
