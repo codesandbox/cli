@@ -51,7 +51,6 @@ export async function uploadSandbox(
 }
 
 export async function fetchUser(token: string) {
-  console.log('hey mam');
   const Authorization = `Bearer ${token}`;
   const options: AxiosRequestConfig = {
     headers: {
