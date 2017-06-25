@@ -34,8 +34,8 @@ async function validateExistance(projectPath: string, checkPath: string) {
   const fileExists = await fs.exists(checkPath);
 
   if (!fileExists) {
-    const friendlyPath = checkPath.replace(projectPath, checkPath);
-    throw new Error(`The project doesn't have a ${friendlyPath}`);
+    const friendlyPath = checkPath.replace(projectPath, './');
+    throw new Error(`The project doesn't contain a ${friendlyPath}`);
   }
 }
 
