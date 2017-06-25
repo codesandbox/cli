@@ -1,17 +1,28 @@
 {
-  "name": "codesandbox",
+  "name": "codesandbox-cli",
   "version": "1.0.0",
   "description": "The CLI used for communcating with CodeSandbox",
+  "main": "lib/index.js",
   "bin": {
-    "codesandbox": "dist/index.js"
+    "codesandbox": "./lib/index.js"
   },
   "author": "Ives van Hoorne",
   "license": "MIT",
   "scripts": {
-    "test": "yarn build && jest",
+    "test": "npm run build && jest",
     "test:watch": "jest --watch",
-    "build": "rimraf dist && tsc -p tsconfig.json"
+    "build": "rimraf lib && tsc -p tsconfig.json",
+    "prepublish": "npm run -s build"
   },
+  "repository": "CompuIves/codesandbox-cli",
+  "files": [
+    "lib"
+  ],
+  "keywords": [
+    "codesandbox",
+    "cli",
+    "editor"
+  ],
   "dependencies": {
     "axios": "^0.16.2",
     "chalk": "^1.1.3",
