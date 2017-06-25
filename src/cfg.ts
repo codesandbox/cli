@@ -50,9 +50,9 @@ export async function read(): Promise<IConfig> {
       const user = await api.fetchUser(token);
 
       if (user) {
-        await save({ ...existing, user, lastUpdate: Date.now() });
+        existing = { ...existing, user, lastUpdate: Date.now() };
 
-        existing = { ...existing, user };
+        await save(existing);
       } else {
         await deleteUser();
       }
@@ -91,9 +91,8 @@ export async function merge(data: object) {
  *
  * @export
  */
-export function deleteUser() {
-  remove('user');
-  remove('token');
+export async function deleteUser() {
+  await save({});
 }
 
 /**
