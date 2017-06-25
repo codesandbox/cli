@@ -1,5 +1,6 @@
 import * as detectPort from 'detect-port';
 import * as http from 'http';
+import { omit } from 'lodash';
 import * as opn from 'opn';
 import * as sockjs from 'sockjs';
 import ora = require('ora');
@@ -61,7 +62,7 @@ async function handleSignIn() {
   const userInfo = (await openSocketServer(port)) as IUser;
 
   spinner.text = 'Saving data';
-  await cfg.saveUser(userInfo);
+  await cfg.saveUser(userInfo.jwt, omit(userInfo, ['jwt']) as IUser);
   spinner.stop();
 
   return userInfo;

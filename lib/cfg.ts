@@ -4,7 +4,10 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 import ms = require('ms');
 
-const TTL = ms('14d');
+import * as api from './utils/api';
+import { error } from './utils/log';
+
+const TTL = ms('8h');
 
 interface IConfig {
   [key: string]: any | undefined;
@@ -37,18 +40,26 @@ export async function read(): Promise<IConfig> {
     /* Do nothing */
   }
 
-  if (!existing.user) {
+  if (!existing.token) {
     return {};
   }
 
   if (!existing.lastUpdate || Date.now() - existing.lastUpdate > TTL) {
-    const token = existing.user.jwt;
-    // const user = await getUser({ token });
+    const token = existing.token;
+    try {
+      const user = await api.fetchUser(token);
 
-    // if (user) {
-    //   // TODO
-    //   await save(existing);
-    // }
+      if (user) {
+        await save({ ...existing, user, lastUpdate: Date.now() });
+
+        existing = { ...existing, user };
+      } else {
+        await deleteUser();
+      }
+    } catch (e) {
+      error('Could not authorize the user.');
+      await deleteUser();
+    }
   }
 
   return existing;
@@ -81,7 +92,8 @@ export async function merge(data: object) {
  * @export
  */
 export function deleteUser() {
-  return remove('user');
+  remove('user');
+  remove('token');
 }
 
 /**
@@ -91,8 +103,8 @@ export function deleteUser() {
  * @param {User} user
  * @returns
  */
-export function saveUser(user: IUser) {
-  return merge({ user });
+export function saveUser(token: string, user: IUser) {
+  return merge({ user, token, lastUpdate: Date.now() });
 }
 
 /**
@@ -104,6 +116,11 @@ export function saveUser(user: IUser) {
 export async function getUser(): Promise<IUser | undefined> {
   const cfg = await read();
   return cfg.user;
+}
+
+export async function getToken(): Promise<string | undefined> {
+  const cfg = await read();
+  return cfg.token;
 }
 
 export const removeFile = async () => fs.remove(file);

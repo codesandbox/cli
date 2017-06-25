@@ -60,6 +60,12 @@
   version "20.0.2"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-20.0.2.tgz#86c751121fb53dbd39bb1a08c45083da13f2dc67"
 
+"@types/lodash.omit@^4.5.2":
+  version "4.5.2"
+  resolved "https://registry.yarnpkg.com/@types/lodash.omit/-/lodash.omit-4.5.2.tgz#f2dde22e380908e13447265f42df59b74b8eb73a"
+  dependencies:
+    "@types/lodash" "*"
+
 "@types/lodash.values@^4.3.2":
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/@types/lodash.values/-/lodash.values-4.3.2.tgz#44bb3196f0ea95a14dfa2dcec46c9b20817aefc5"
@@ -1832,6 +1838,10 @@ locate-path@^2.0.0:
   dependencies:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
+
+lodash.omit@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.omit/-/lodash.omit-4.5.0.tgz#6eb19ae5a1ee1dd9df0b969e66ce0b7fa30b5e60"
 
 lodash.values@^4.3.0:
   version "4.3.0"
