@@ -25,6 +25,21 @@ async function getPackageJSON(projectPath: string) {
 }
 
 /**
+ * Validates the existence of the specified file
+ *
+ * @param {string} projectPath Path to project
+ * @param {string} checkPath Absolute path to file to check
+ */
+async function validateExistance(projectPath: string, checkPath: string) {
+  const fileExists = await fs.exists(checkPath);
+
+  if (!fileExists) {
+    const friendlyPath = checkPath.replace(projectPath, checkPath);
+    throw new Error(`The project doesn't have a ${friendlyPath}`);
+  }
+}
+
+/**
  * Return public/index.html contents
  *
  * @param {string} projectPath
@@ -58,6 +73,12 @@ export default async function parseSandbox(projectPath: string) {
   if (packageJSON.dependencies == null) {
     throw new Error("The package.json doesn't have any dependencies.");
   }
+
+  // Check if src/index.js exists
+  await validateExistance(
+    resolvedPath,
+    path.join(resolvedPath, 'src', 'index.js'),
+  );
 
   const indexHTML = await getIndexHTML(resolvedPath);
 
