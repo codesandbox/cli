@@ -43,14 +43,12 @@ async function showWarnings(resolvedPath: string, errors: FileError[]) {
   console.log();
   log(
     chalk.yellow(
-      'Support for using the ' +
+      'File hosting using the ' +
         chalk.bold('public') +
-        ' folder is not yet here',
+        ' folder is not supported yet.',
     ),
   );
   console.log();
-
-  return await confirm('Do you still want to continue deployment?');
 }
 
 export default function registerCommand(program: typeof Commander) {
@@ -98,10 +96,7 @@ export default function registerCommand(program: typeof Commander) {
         }
 
         // Show warnings for all errors
-        const acceptWarnings = await showWarnings(resolvedPath, errors);
-        if (!acceptWarnings) {
-          return;
-        }
+        await showWarnings(resolvedPath, errors);
 
         info(
           'By deploying to CodeSandbox, the code of your project will be made ' +
