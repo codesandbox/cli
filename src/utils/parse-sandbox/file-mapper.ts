@@ -18,13 +18,22 @@ const createSandboxDirectory = (
   title: name,
 });
 
+/**
+ * Creates a sandbox module that's parseable by the API
+ * @param name name of module
+ * @param code code in module
+ * @param isBinary whether the module is binary (like an image)
+ * @param parentShortid parent directory of the module (null if root)
+ */
 const createSandboxModule = (
   name: string,
   code: string,
+  isBinary: boolean = false,
   parentShortid?: string,
 ) => ({
   code,
   directory_shortid: parentShortid,
+  is_binary: isBinary,
   shortid: generateShortid(),
   title: name,
 });
@@ -50,6 +59,7 @@ function readFileToSandboxModule(
     throw new FileError(
       `Static file hosting is not supported yet.`,
       modulePath,
+      true,
     );
   }
 
@@ -59,10 +69,11 @@ function readFileToSandboxModule(
     throw new FileError(
       `The file ${name} is too big to be added (${code.length} > ${MAX_FILE_SIZE}).`,
       modulePath,
+      true,
     );
   }
 
-  return createSandboxModule(name, code, parentShortid);
+  return createSandboxModule(name, code, false, parentShortid);
 }
 
 interface ICategorizedPaths {
@@ -112,20 +123,29 @@ async function mapDirectory(
   const errors: FileError[] = [];
 
   // Convert all file paths in this dir to sandbox modules
-  const sandboxModules = files.map(filePath => {
-    try {
-      return readFileToSandboxModule(filePath, parentShortid);
-    } catch (e) {
-      if (!e.path) {
-        e.path = filePath;
+  const sandboxModules = files
+    .map(filePath => {
+      try {
+        return readFileToSandboxModule(filePath, parentShortid);
+      } catch (e) {
+        if (!e.path) {
+          e.path = filePath;
+        }
+
+        errors.push(e);
+
+        if (e.isBinary) {
+          // Return a mock module for binary
+          return createSandboxModule(
+            path.basename(filePath),
+            '',
+            e.isBinary,
+            parentShortid,
+          );
+        }
       }
-
-      errors.push(e);
-
-      // Return a mock module
-      return createSandboxModule(path.basename(filePath), '', parentShortid);
-    }
-  });
+    })
+    .filter(x => x) as ISandboxModule[];
 
   // Convert all directory paths to sandbox directories
   const sandboxDirectories = directories.map(childDirPath =>
