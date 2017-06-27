@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { values } from 'lodash';
 
 import { getToken } from '../cfg';
-import { CREATE_SANDBOX_URL, GET_USER_URL } from './url';
+import { CREATE_SANDBOX_URL, GET_USER_URL, verifyUserTokenUrl } from './url';
 
 const callApi = async (options: AxiosRequestConfig) => {
   try {
@@ -58,6 +58,15 @@ export async function fetchUser(token: string) {
     },
     method: 'GET',
     url: GET_USER_URL,
+  };
+
+  return callApi(options);
+}
+
+export async function verifyUser(token: string) {
+  const options: AxiosRequestConfig = {
+    method: 'GET',
+    url: verifyUserTokenUrl(token),
   };
 
   return callApi(options);
