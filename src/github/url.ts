@@ -19,6 +19,9 @@ export interface IOptions {
   forceRefresh?: boolean;
   expandDevTools?: boolean;
   initialPath?: string;
+  gitRepo?: string;
+  gitUsername?: string;
+  gitBranch?: string;
 }
 
 function optionsToParameterizedUrl(options: { [option: string]: any }) {
@@ -99,10 +102,10 @@ function getUrlOptions(options: IOptions) {
 
 const CODESANDBOX_ROOT = `https://codesandbox.io`;
 
-function getRepoPath(examplePath?: string) {
+function getRepoPath(options: IOptions) {
   let currentBranch;
   let currentUsername;
-  const currentRepo = repoName.sync();
+  const currentRepo = options.gitRepo || repoName.sync();
 
   // Check whether the build is happening on Netlify
   if (process.env.REPOSITORY_URL) {
@@ -116,6 +119,9 @@ function getRepoPath(examplePath?: string) {
     currentUsername = username();
   }
 
+  currentBranch = currentBranch || options.gitBranch;
+  currentUsername = currentUsername || options.gitUsername;
+
   if (!currentBranch) {
     throw new Error('Could not fetch branch from the git info.');
   }
@@ -128,15 +134,15 @@ function getRepoPath(examplePath?: string) {
 
   let path = `${currentUsername}/${currentRepo}/tree/${currentBranch}`;
 
-  if (examplePath) {
-    path += '/' + examplePath;
+  if (options.examplePath) {
+    path += '/' + options.examplePath;
   }
 
   return path;
 }
 
 function getFullUrl(type: 's' | 'embed', options: IOptions) {
-  const gitPath = getRepoPath(options.examplePath);
+  const gitPath = getRepoPath(options);
   const urlOptions = getUrlOptions(options);
 
   return `${CODESANDBOX_ROOT}/${type}/${gitPath}${urlOptions}`;
