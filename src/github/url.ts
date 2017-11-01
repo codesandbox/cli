@@ -1,3 +1,6 @@
+import * as fs from 'fs';
+import { basename, dirname } from 'path';
+
 /* tslint:disable no-var-requires */
 const branch = require('git-branch');
 const username = require('git-username');
@@ -102,10 +105,28 @@ function getUrlOptions(options: IOptions) {
 
 const CODESANDBOX_ROOT = `https://codesandbox.io`;
 
+function findGitRoot() {
+  let currentPath = __dirname;
+
+  while (
+    !fs.readdirSync(currentPath).find(f => basename(f) === '.git') &&
+    currentPath !== '/'
+  ) {
+    currentPath = dirname(currentPath);
+  }
+
+  if (currentPath === '/') {
+    throw new Error('Could not find .git folder');
+  }
+
+  return currentPath;
+}
+
 function getRepoPath(options: IOptions) {
+  const gitPath = findGitRoot();
   let currentBranch;
   let currentUsername;
-  const currentRepo = options.gitRepo || repoName.sync();
+  const currentRepo = options.gitRepo || repoName.sync(gitPath);
 
   // Check whether the build is happening on Netlify
   if (process.env.REPOSITORY_URL) {
@@ -115,8 +136,8 @@ function getRepoPath(options: IOptions) {
     currentUsername = usernameParts[1];
     currentBranch = process.env.BRANCH;
   } else {
-    currentBranch = branch.sync();
-    currentUsername = username();
+    currentBranch = branch.sync(gitPath);
+    currentUsername = username(gitPath);
   }
 
   currentBranch = currentBranch || options.gitBranch;
