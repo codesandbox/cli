@@ -10,7 +10,7 @@ const BLACKLISTED_DEPENDENCIES = [
   'flow-bin',
 ];
 
-interface IDependencies {
+export interface IDependencies {
   [name: string]: string;
 }
 
@@ -54,7 +54,7 @@ async function getAbsoluteVersions(dependencies: IDependencies) {
         e.message = `Could not fetch version for ${depString}: ${e.message}`;
         throw e;
       }
-    }),
+    })
   );
 
   return absoluteDependencies.reduce((total: IDependencies, next) => {

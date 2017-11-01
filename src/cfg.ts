@@ -9,7 +9,16 @@ import { error } from './utils/log';
 
 const TTL = ms('8h');
 
-interface IConfig {
+export interface IUser {
+  avatar_url: string;
+  email: string;
+  id: string;
+  name: string;
+  username: string;
+  jwt: string;
+}
+
+export interface IConfig {
   [key: string]: any | undefined;
   lastUpdate?: number;
   user?: IUser;

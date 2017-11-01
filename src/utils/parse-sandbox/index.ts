@@ -5,7 +5,7 @@ import * as path from 'path';
 
 import mapDependencies from './dependency-mapper';
 import FileError from './file-error';
-import mapFiles from './file-mapper';
+import mapFiles, { ISandboxDirectory, ISandboxModule } from './file-mapper';
 import parseHTML from './html-parser';
 
 /**
@@ -77,7 +77,7 @@ export default async function parseSandbox(projectPath: string) {
   // Check if src/index.js exists
   await validateExistance(
     resolvedPath,
-    path.join(resolvedPath, 'src', 'index.js'),
+    path.join(resolvedPath, 'src', 'index.js')
   );
 
   const indexHTML = await getIndexHTML(resolvedPath);
@@ -87,7 +87,7 @@ export default async function parseSandbox(projectPath: string) {
 
   const { directories, modules, errors } = await mapFiles(
     path.join(resolvedPath, 'src'),
-    body,
+    body
   );
 
   return {

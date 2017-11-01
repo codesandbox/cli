@@ -2,6 +2,10 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { values } from 'lodash';
 
 import { getToken } from '../cfg';
+import {
+  ISandboxDirectory,
+  ISandboxModule,
+} from '../utils/parse-sandbox/file-mapper';
 import { CREATE_SANDBOX_URL, GET_USER_URL, verifyUserTokenUrl } from './url';
 
 const callApi = async (options: AxiosRequestConfig) => {
@@ -20,7 +24,7 @@ export async function uploadSandbox(
   modules: ISandboxModule[],
   directories: ISandboxDirectory[],
   externalResources: string[],
-  dependencies: { [name: string]: string },
+  dependencies: { [name: string]: string }
 ) {
   const token = await getToken();
 
