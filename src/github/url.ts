@@ -166,7 +166,7 @@ function getFullUrl(type: 's' | 'embed', options: IOptions) {
   const gitPath = getRepoPath(options);
   const urlOptions = getUrlOptions(options);
 
-  return `${CODESANDBOX_ROOT}/${type}/${gitPath}${urlOptions}`;
+  return `${CODESANDBOX_ROOT}/${type}/github/${gitPath}${urlOptions}`;
 }
 
 export function getSandboxUrl(options?: IOptions) {
