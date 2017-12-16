@@ -13,8 +13,8 @@ import { login } from './login';
 import parseSandbox from '../utils/parse-sandbox';
 import FileError from '../utils/parse-sandbox/file-error';
 
-const MAX_MODULE_COUNT = 50;
-const MAX_DIRECTORY_COUNT = 30;
+const MAX_MODULE_COUNT = 100;
+const MAX_DIRECTORY_COUNT = 50;
 
 /**
  * Show warnings for the errors that occured during mapping of files, we
